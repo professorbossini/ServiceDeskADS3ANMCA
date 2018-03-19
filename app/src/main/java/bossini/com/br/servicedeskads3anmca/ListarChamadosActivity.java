@@ -9,13 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListarChamadosActivity extends AppCompatActivity {
 
     public static final String DESCRICAO =
             "br.usjt.servicedesk.descricao";
-    private List<String> lista;
+    private List<Chamado> lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,21 @@ public class ListarChamadosActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<String> geraListaChamados(){
-        ArrayList<String> lista = new ArrayList<>();
-        lista.add("Desktops: Computador da secretária quebrado.");
-        lista.add("Telefonia: Telefone não funciona.");
-        lista.add("Redes: Manutenção no proxy.");
+    public ArrayList<Chamado> geraListaChamados(){
+        ArrayList<Chamado> lista = new ArrayList<>();
+        Chamado c1 = new Chamado (1, new Date(),
+                null, "aberto",
+                "Desktops: Computador da secretária quebrado.",
+                new Fila (1, "7desktops.png", "Desktops"));
+        lista.add(c1);
+        Chamado c2 = new Chamado (2, new Date(),
+                null, "aberto",
+                "Redes: Manutenção no proxy.",
+                new Fila (2, "5redes.png", "Redes"));
+        lista.add(c2);
+        return lista;
+        /*lista.add("Telefonia: Telefone não funciona.");
+        lista.add();
         lista.add("Servidores: Lentidão generalizada.");
         lista.add("Novos Projetos: CRM");
         lista.add("Manutenção Sistema ERP: atualizar versão.");
@@ -63,19 +74,19 @@ public class ListarChamadosActivity extends AppCompatActivity {
         lista.add("Telefonia: liberar celular");
         lista.add("Telefonia: mover ramal");
         lista.add("Redes: ponto com defeito");
-        lista.add("Novos Projetos: ferramenta EMM");
-        return lista;
+        lista.add("Novos Projetos: ferramenta EMM");*/
+
     }
 
-    public ArrayList<String> buscaChamados(String chave){
-        ArrayList<String> lista = geraListaChamados();
+    public ArrayList<Chamado> buscaChamados(String chave){
+        ArrayList<Chamado> lista = geraListaChamados();
         if (chave == null || chave.length() == 0){
             return lista;
         } else {
-            ArrayList<String> subLista = new ArrayList<>();
-            for(String nome:lista){
-                if(nome.toUpperCase().contains(chave.toUpperCase())){
-                    subLista.add(nome);
+            ArrayList<Chamado> subLista = new ArrayList<>();
+            for(Chamado chamado :lista){
+                if(chamado.getDescricao().toUpperCase().contains(chave.toUpperCase())){
+                    subLista.add(chamado);
                 }
             }
             return subLista;
