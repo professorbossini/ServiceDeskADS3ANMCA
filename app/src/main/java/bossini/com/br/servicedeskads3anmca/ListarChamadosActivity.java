@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -25,8 +24,11 @@ public class ListarChamadosActivity extends AppCompatActivity {
         Intent origemIntent = getIntent();
         String chave = origemIntent.getStringExtra (MainActivity.NOME);
         lista = buscaChamados (chave);
-        ArrayAdapter <String> adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+        //ArrayAdapter <String> adapter =
+        //        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+
+        ChamadoAdapter <Chamado> adapter =
+                new ChamadoAdapter<>(this, lista);
         ListView listView =
                 (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
@@ -44,15 +46,14 @@ public class ListarChamadosActivity extends AppCompatActivity {
 
     public ArrayList<Chamado> geraListaChamados(){
         ArrayList<Chamado> lista = new ArrayList<>();
-        Chamado c1 = new Chamado (1, new Date(),
-                null, "aberto",
-                "Desktops: Computador da secretária quebrado.",
-                new Fila (1, "7desktops.png", "Desktops"));
+        Chamado c1 = new Chamado (1, new Date (), null, "aberto",
+                "computador da secretária quebrado", new Fila(
+                  1, "desktops", "Desktops"));
         lista.add(c1);
-        Chamado c2 = new Chamado (2, new Date(),
-                null, "aberto",
-                "Redes: Manutenção no proxy.",
-                new Fila (2, "5redes.png", "Redes"));
+
+        Chamado c2 = new Chamado (2, new Date (), null, "aberto",
+                "Telefone não funciona", new Fila(
+                2, "telefonia", "Telefonia"));
         lista.add(c2);
         return lista;
         /*lista.add("Telefonia: Telefone não funciona.");

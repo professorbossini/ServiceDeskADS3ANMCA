@@ -42,33 +42,56 @@ public class ChamadoAdapter <T> extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater =
-                (LayoutInflater) context.
-                        getSystemService(
-                                Context.
-                                        LAYOUT_INFLATER_SERVICE);
-        View v =
-                inflater.inflate(R.layout.linha_chamado, viewGroup, false);
-        ImageView imageView =
-                v.findViewById(R.id.iconeFilaImageView);
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        ViewHolder viewHolder = null;
+        ImageView imageView = null;
+        TextView dataAberturaTextView;
+        TextView descricaoTextView = null;
+        TextView statusTextView =null;
+        if (convertView == null){
+            LayoutInflater inflater =
+                    (LayoutInflater) context.
+                            getSystemService(
+                                    Context.
+                                            LAYOUT_INFLATER_SERVICE);
+            convertView =
+                    inflater.inflate(R.layout.linha_chamado, viewGroup, false);
+            imageView =
+                    convertView.findViewById(R.id.iconeFilaImageView);
+            descricaoTextView =
+                    convertView.findViewById(R.id.descricaoTextView);
+            dataAberturaTextView =
+                    convertView.findViewById(R.id.dataAberturaTextView);
+            statusTextView =
+                    convertView.findViewById(R.id.statusTextView);
+            viewHolder = new ViewHolder();
+            viewHolder.iconeFilaImageView = imageView;
+            viewHolder.descricaoTextView = descricaoTextView;
+            viewHolder.dataAberturaTextView = dataAberturaTextView;
+            viewHolder.statusTextView = statusTextView;
+            convertView.setTag(viewHolder);
+        }
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
         T chamado = getItem(i);
         Fila f = ((Chamado)chamado).getFila();
         Drawable foto =
                 Util.getDrawable(context, f.getIcone());
-        imageView.setImageDrawable(foto);
-        TextView descricaoTextView =
-                view.findViewById(R.id.descricaoTextView);
-        descricaoTextView.setText(((Chamado)chamado).getDescricao());
-        TextView dataAberturaTextView =
-                view.findViewById(R.id.dataAberturaTextView);
-        dataAberturaTextView.setText(
+        viewHolder.iconeFilaImageView.setImageDrawable(foto);
+        viewHolder.descricaoTextView.setText(((Chamado)chamado).getDescricao());
+        viewHolder.dataAberturaTextView.setText(
                 ((Chamado)chamado).getDataAbertura()
                         .toString()
         );
-        TextView statusTextView =
-                view.findViewById(R.id.statusTextView);
-        statusTextView.setText(((Chamado)chamado).getStatus());
-        return view;
+        viewHolder.statusTextView.setText(((Chamado)chamado).getStatus());
+        return convertView;
+    }
+
+    private class ViewHolder{
+        ImageView iconeFilaImageView;
+        TextView descricaoTextView;
+        TextView dataAberturaTextView;
+        TextView statusTextView;
     }
 }

@@ -1,13 +1,14 @@
 package bossini.com.br.servicedeskads3anmca;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by rodrigo on 19/03/18.
  */
 
-public class Chamado {
+public class Chamado implements Serializable{
 
     private int numero;
     private Date dataAbertura, dataFechamento;

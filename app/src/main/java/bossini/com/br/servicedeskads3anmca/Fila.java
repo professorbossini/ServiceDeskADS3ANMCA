@@ -1,10 +1,12 @@
 package bossini.com.br.servicedeskads3anmca;
 
+import java.io.Serializable;
+
 /**
  * Created by rodrigo on 19/03/18.
  */
 
-public class Fila {
+public class Fila implements Serializable{
     private int id;
     private String icone, nome;
 
